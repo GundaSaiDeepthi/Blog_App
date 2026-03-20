@@ -1,0 +1,96 @@
+### User register
+POST http://localhost:4000/user-api/users
+Content-Type: application/json
+
+{
+    "firstName":"vani",
+    "lastName":"gaddam",
+    "email":"vani.gaddam@example.com",
+    "password":"vani9y34",
+    "profileImageUrl":"https://example.com/avatars/vani.png"
+}
+
+
+###User Login
+POST http://localhost:4000/common-api/login
+Content-Type: application/json
+
+{
+    "email":"vani.gaddam@example.com",
+    "password":"vani9y34"
+}
+
+
+### user read articles
+GET http://localhost:4000/user-api/articles/6989b0841217784e21dba9be
+
+
+### author register
+POST http://localhost:4000/author-api/users
+Content-Type: application/json
+
+{
+    "firstName":"marvel",
+    "lastName":"anton",
+    "email":"marvel.anton@example.com",
+    "password":"anton7234",
+    "profileImageUrl":"https://example.com/avatars/anton.png"
+}
+
+
+### Create article(AUTHOR)
+POST http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+    "author":"698ca381e205248adf48f39c",
+    "title":"test2 article",
+    "category":"programming",
+    "content":"content of test2 article"
+}
+
+### read articles by id
+GET http://localhost:4000/author-api/articles/698969efa91184fd0bea927e
+
+
+### Update article(AUTHOR)
+PUT http://localhost:4000/author-api/articles
+Content-Type: application/json
+
+{
+    "author":"698979ca51e316f75fa027a1",
+    "articleId":"698975ab96efd7b948bf1c83",
+    "title":"test2 article",
+    "category":"programming & ML",
+    "content":"content of test2 article is updated"
+}
+
+### delete articles by id
+DELETE  http://localhost:4000/author-api/articles/698975ab96efd7b948bf1c83
+
+
+### block user by admin
+PUT http://localhost:4000/admin-api/block/6989b0841217784e21dba9be
+
+
+### unblock user by admin
+PUT http://localhost:4000/admin-api/unblock/6989b0841217784e21dba9be
+
+
+###change password
+PUT http://localhost:4000/common-api/change-password
+Content-Type: application/json
+
+{
+    "email":"vani.gaddam@example.com",
+    "currentPassword":"vanipass",
+    "newPassword":"vani9y34"
+}
+
+
+###logout
+GET http://localhost:4000/common-api/logout
+
+
+###Test req
+GET http://localhost:4000/test
