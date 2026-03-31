@@ -81,6 +81,13 @@ export const editBtn = "bg-[#0066cc] text-white text-sm px-4 py-2 rounded-full h
 
 export const deleteBtn = "bg-[#ff3b30] text-white text-sm px-4 py-2 rounded-full hover:bg-[#d62c23] transition";
 
+// ─── Article Status Badge ─────────────────────────
+export const articleStatusActive =
+  "absolute top-3 right-3 text-[10px] font-semibold px-2 py-1 rounded-full bg-[#34c759]/20 text-[#248a3d]";
+
+export const articleStatusDeleted =
+  "absolute top-3 right-3 text-[10px] font-semibold px-2 py-1 rounded-full bg-[#ff3b30]/20 text-[#cc2f26]";
+
 // ─── Feedback ─────────────────────────────────────────
 export const errorClass =
   "bg-[#ff3b30]/[0.06] text-[#cc2f26] border border-[#ff3b30]/[0.18] rounded-xl px-4 py-3 text-sm";

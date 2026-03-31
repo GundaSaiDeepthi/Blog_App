@@ -33,13 +33,19 @@ function EditArticle() {
   useEffect(() => {
     if (!article) return;
 
-    setValue("title", article.title);
-    setValue("category", article.category);
-    setValue("content", article.content);
+     setValue("title", article.title);
+     setValue("category", article.category);
+     setValue("content", article.content);
   }, [article]);
 
   const updateArticle = async (data) => {
     console.log(data);
+    data.articleId = article._id;
+    let res = await axios.put("http://localhost:4000/author-api/articles", data, { withCredentials: true });
+    console.log("res update atricle", res);
+    navigate(`/article/${article._id}`, {
+      state: res.data.payload,
+    });
   };
 
   return (
