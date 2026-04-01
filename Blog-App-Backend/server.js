@@ -14,7 +14,7 @@ const app = exp()
 //add cookie parser middleware
 app.use(cookieParser()) 
 //use cors middleware
-app.use(cors({origin:['http://localhost:5173'],credentials:true})) //credentials will attach token to header 
+app.use(cors({origin:['https://vercel.com/gundasaideepthis-projects/blog-app'],credentials:true})) //credentials will attach token to header 
 //add body parser middleware
 app.use(exp.json())
 
