@@ -34,7 +34,7 @@ function AuthorArticles() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`http://localhost:4000/author-api/articles/${authorId}`, { withCredentials: true });
+        const res = await axios.get(`https://blog-app-1-n245.onrender.com/author-api/articles/${authorId}`, { withCredentials: true });
 
         setArticles(res.data.payload);
       } catch (err) {
