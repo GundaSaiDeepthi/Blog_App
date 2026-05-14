@@ -52,7 +52,7 @@ export const useAuth = create((set) => ({
       });
     }
   },
-  // restore login
+// restore login
   checkAuth: async () => {
     try {
       set({ loading: true });

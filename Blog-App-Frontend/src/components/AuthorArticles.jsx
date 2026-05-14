@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import { useAuth } from "../store/authStore";
-const API = import.meta.env.VITE_API_URL;
 
 import {
   articleCardClass,
@@ -15,7 +14,7 @@ import {
   emptyStateClass,
   articleStatusActive,
   articleStatusDeleted,
-} from "../styles/common";
+} from "../styles/common.js";
 
 function AuthorArticles() {
   const navigate = useNavigate();
@@ -28,13 +27,14 @@ function AuthorArticles() {
   console.log("user in author profile",user)
   
   useEffect(() => {
-    if (!user) return;
+    const authorId = user?._id || user?.userId;
+    if (!authorId) return;
 
     const getAuthorArticles = async () => {
       setLoading(true);
 
       try {
-        const res = await axios.get(`${API}/author-api/articles/${user._id}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:4000/author-api/articles/${authorId}`, { withCredentials: true });
 
         setArticles(res.data.payload);
       } catch (err) {
@@ -46,7 +46,7 @@ function AuthorArticles() {
     };
 
     getAuthorArticles();
-  }, [user]);
+  }, [user?.userId, user?._id]);
 
   const openArticle = (article) => {
     navigate(`/article/${article._id}`, {

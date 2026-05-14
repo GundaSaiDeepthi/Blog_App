@@ -11,6 +11,7 @@ import WriteArticle from "./components/WriteArticle";
 import { Toaster } from "react-hot-toast";
 import EditArticle from "./components/EditArticleForm";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./components/Unauthorized";
 import ErrorBoundary from "./components/ErrorBoundary";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
     {
       path: "/",
       element: <RootLayout />,
-      errorElement:<ErrorBoundary/>,
+      errorElement:<ErrorBoundary />,
       children: [
         ,
         {
@@ -36,16 +37,27 @@ function App() {
         {
           path: "user-profile",
           element: 
-          <ProtectedRoute allowedRoles={["USER"]}>
-          <UserProfile />,
-          </ProtectedRoute>
+          <ProtectedRoute allowedRoles={["USER", "AUTHOR"]}>
+            <UserProfile />
+          </ProtectedRoute>,
+          children: [
+            {
+              index: true,
+              element: <AuthorArticles />,
+            },
+            {
+              path: "write-article",
+              element: <WriteArticle />,
+            },
+          ],
         },
         {
           path: "author-profile",
           element: 
           <ProtectedRoute allowedRoles={["AUTHOR"]}>
-          <AuthorProfile />,
+            <AuthorProfile />
           </ProtectedRoute>,
+          
           children: [
             {
               index: true,
@@ -68,6 +80,10 @@ function App() {
         {
           path:"edit-article",
           element:<EditArticle />
+        },
+        {
+          path:"unauthorized",
+          element:<Unauthorized />
         }
       ],
     },

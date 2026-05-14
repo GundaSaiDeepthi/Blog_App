@@ -1,35 +1,45 @@
-import exp from 'express'
-import { UserTypeModel } from '../models/UserModel.js'
-export const adminRoute = exp.Router()
+import exp from 'express';
+import { checkAdmin } from '../middlewares/checkAdmin.js';
+import { UserTypeModel } from '../models/UserModel.js';
 
-//read all articles(optional)
+export const adminRoute=exp.Router();
 
-
-//block user
-adminRoute.put('/block/:id', async (req, res) => {
-    let uid = req.params.id
-    let user = await UserTypeModel.findById(uid)
-    if (!user) {
-        return res.json({message:"User not found"})
+//Block user roles
+adminRoute.post("/blockuser/:adminId",checkAdmin,async(req,res)=>{
+    //get userId
+    let {userId}=req.body;
+    //find user
+    let userofDB=await UserTypeModel.findOne({_id:userId});
+    if(!userofDB){
+        return res.status(401).json({message:"User not found"});
     }
-    if (user.isActive==false) {
-        return res.json({message:"User already blocked previously"})
-    }
-    let blockUser = await UserTypeModel.findByIdAndUpdate(uid, { $set: { isActive: false } })
-    res.json({message:"User blocked"})
-})
+    let blockeduser=await UserTypeModel.findByIdAndUpdate(
+        userId,
+        {
+            $set:{isActive:false}
+        },
+        {new:true}
+    );
+    //send res
+    res.status(200).json({message:"User blocked",payload:blockeduser});
+})   
 
-
-//unblock user
-adminRoute.put('/unblock/:id', async (req, res) => {
-    let uid = req.params.id
-    let user = await UserTypeModel.findById(uid)
-    if (!user) {
-        return res.json({message:"User not found"})
+//Unblock user roles
+adminRoute.post("/unblockuser/:adminId",checkAdmin,async(req,res)=>{
+    //get userId
+    let {userId}=req.body;
+    //find user
+    let userofDB=await UserTypeModel.findOne({_id:userId});
+    if(!userofDB){
+        return res.status(401).json({message:"User not found"});
     }
-    if (user.isActive==true) {
-        return res.json({message:"User already unblocked previously"})
-    }
-    let blockUser = await UserTypeModel.findByIdAndUpdate(uid, { $set: { isActive: true } })
-    res.json({message:"User unblocked"})
-})
+    let unblockeduser=await UserTypeModel.findByIdAndUpdate(
+        userId,
+        {
+            $set:{isActive:true}
+        },
+        {new:true}
+    );
+    //send res
+    res.status(200).json({message:"User unblocked",payload:unblockeduser});
+})   

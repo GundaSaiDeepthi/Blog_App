@@ -20,9 +20,6 @@ import {
   inputClass,
 } from "../styles/common.js";
 import { useForm } from "react-hook-form";
-const API = import.meta.env.VITE_API_URL;
-
-
 
 function ArticleByID() {
   const { id } = useParams();
@@ -43,7 +40,7 @@ function ArticleByID() {
       setLoading(true);
 
       try {
-        const res = await axios.get(`${API}/author-api/articles/${id}`, { withCredentials: true });
+        const res = await axios.get(`http://localhost:4000/user-api/article/${id}`, { withCredentials: true });
 
         setArticle(res.data.payload);
       } catch (err) {
@@ -73,7 +70,7 @@ function ArticleByID() {
 
     try {
       const res = await axios.patch(
-        `${API}/author-api/articles/articles/${id}/status`,
+        `http://localhost:4000/author-api/articles/${id}/status`,
         { isArticleActive: newStatus },
         { withCredentials: true },
       );
@@ -106,7 +103,7 @@ function ArticleByID() {
     //add artcileId
     commentObj.articleId = article._id;
     console.log(commentObj);
-    let res = await axios.put(`${API}/user-api/articles`, commentObj, { withCredentials: true });
+    let res = await axios.put("http://localhost:4000/user-api/articles", commentObj, { withCredentials: true });
     if (res.status === 200) {
       toast.success(res.data.message);
       setArticle(res.data.payload);
@@ -136,7 +133,7 @@ function ArticleByID() {
       <div className={articleContent}>{article.content}</div>
 
       {/* AUTHOR actions */}
-      {user?.role === "AUTHOR" && (
+      {user?.role === "AUTHOR" && article.author?._id === user._id && (
         <div className={articleActions}>
           <button className={editBtn} onClick={() => editArticle(article)}>
             Edit
@@ -182,10 +179,3 @@ function ArticleByID() {
 }
 
 export default ArticleByID;
-
-// {
-//   "user":"6989799b7013502767d3f82b",
-//   "articleId":"6989750220ce5bf826ec4f7e",
-//   "comment":"good article"
-
-// }
