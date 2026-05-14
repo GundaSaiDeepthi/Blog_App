@@ -13,7 +13,7 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middleware
-app.use(cors({origin:"https://blog-app-xi-flame.vercel.app/",credentials:true})) //credentials will attach token to header 
+app.use(cors({origin:"https://blog-app-xi-flame.vercel.app",credentials:true})) //credentials will attach token to header 
 //add body parser middleware
 app.use(exp.json());
 //add cookie parser middleware
@@ -38,7 +38,7 @@ const connectDB = async () => {
   }
 };
 
-connectDB();
+
 
 //dealing with invalid path
 app.use((req, res, next) => {
@@ -94,6 +94,8 @@ app.use((err, req, res, next) => {
     error: "Server side error",
   });
 });
+
+connectDB();
 /*
 app.use((err, req, res, next) => {
   // Mongoose validation error
