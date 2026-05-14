@@ -13,7 +13,7 @@ config(); //process.env
 //Create express application
 const app = exp();
 //use cors middleware
-app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
+app.use(cors({origin:['http://localhost:5173'],credentials:true})) //credentials will attach token to header 
 //add body parser middleware
 app.use(exp.json());
 //add cookie parser middleware
@@ -94,3 +94,38 @@ app.use((err, req, res, next) => {
     error: "Server side error",
   });
 });
+/*
+app.use((err, req, res, next) => {
+  // Mongoose validation error
+    if (err.name === "ValidationError") {
+    return res.status(400).json({
+        message: "Validation failed",
+        errors: err.errors,
+    });
+    }
+  // Invalid ObjectId
+    if (err.name === "CastError") {
+    return res.status(400).json({
+        message: "Invalid ID format",
+    });
+    }
+  // Duplicate key
+    if (err.code === 11000) {
+    return res.status(409).json({
+        message: "Duplicate field value",
+    });
+    }
+    res.status(500).json({
+    message: "Internal Server Error",
+    });
+});
+app.use((err, req, res, next) => {
+    console.log("err:", err)
+    res.status(500).json({
+        message: "error",
+        reason: err.message
+    })
+})
+
+
+*/
