@@ -41,7 +41,9 @@ const connectDB = async () => {
   }
 };
 
-
+app.get("/", (req, res) => {
+  res.send("Backend Server Running Successfully");
+});
 
 //dealing with invalid path
 app.use((req, res, next) => {
