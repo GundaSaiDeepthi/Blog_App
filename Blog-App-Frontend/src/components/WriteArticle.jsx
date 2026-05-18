@@ -14,12 +14,16 @@ import {
   errorClass,
   loadingClass,
 } from "../styles/common";
+
 import { useAuth } from "../store/authStore";
 
 function WriteArticle() {
+
   const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
-  const currentUser=useAuth(state=>state.currentUser)
+
+  const currentUser = useAuth((state) => state.currentUser);
 
   const {
     register,
@@ -29,16 +33,34 @@ function WriteArticle() {
   } = useForm();
 
   const submitArticle = async (articleObj) => {
+
     setLoading(true);
 
-    //add authorId to articleObj
+    // check user login
+    if (!currentUser) {
+      toast.error("Please login first");
+      setLoading(false);
+      return;
+    }
+
+    // add author id
     articleObj.author = currentUser._id || currentUser.userId;
+
+    // debug logs
+    console.log("CURRENT USER:", currentUser);
+    console.log("ARTICLE OBJECT:", articleObj);
+
     try {
-      await axios.post(
+
+      const response = await axios.post(
         "https://blog-app-1-n245.onrender.com/author-api/articles",
         articleObj,
-        { withCredentials: true }
+        {
+          withCredentials: true,
+        }
       );
+
+      console.log("RESPONSE:", response.data);
 
       toast.success("Article published successfully!");
 
@@ -47,20 +69,33 @@ function WriteArticle() {
       navigate("/author-profile/articles");
 
     } catch (err) {
-      toast.error(err.response?.data?.error || "Failed to publish article");
+
+      console.log("FULL ERROR:", err);
+      console.log("SERVER RESPONSE:", err.response?.data);
+
+      toast.error(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        "Failed to publish article"
+      );
+
     } finally {
+
       setLoading(false);
+
     }
   };
 
   return (
     <div className={formCard}>
+
       <h2 className={formTitle}>Write New Article</h2>
 
       <form onSubmit={handleSubmit(submitArticle)}>
 
         {/* Title */}
         <div className={formGroup}>
+
           <label className={labelClass}>Title</label>
 
           <input
@@ -77,12 +112,16 @@ function WriteArticle() {
           />
 
           {errors.title && (
-            <p className={errorClass}>{errors.title.message}</p>
+            <p className={errorClass}>
+              {errors.title.message}
+            </p>
           )}
+
         </div>
 
         {/* Category */}
         <div className={formGroup}>
+
           <label className={labelClass}>Category</label>
 
           <select
@@ -91,20 +130,26 @@ function WriteArticle() {
               required: "Category is required",
             })}
           >
+
             <option value="">Select category</option>
             <option value="technology">Technology</option>
             <option value="programming">Programming</option>
             <option value="ai">AI</option>
             <option value="web-development">Web Development</option>
+
           </select>
 
           {errors.category && (
-            <p className={errorClass}>{errors.category.message}</p>
+            <p className={errorClass}>
+              {errors.category.message}
+            </p>
           )}
+
         </div>
 
         {/* Content */}
         <div className={formGroup}>
+
           <label className={labelClass}>Content</label>
 
           <textarea
@@ -121,19 +166,31 @@ function WriteArticle() {
           />
 
           {errors.content && (
-            <p className={errorClass}>{errors.content.message}</p>
+            <p className={errorClass}>
+              {errors.content.message}
+            </p>
           )}
+
         </div>
 
-        {/* Submit */}
-        <button className={submitBtn} type="submit" disabled={loading}>
+        {/* Submit Button */}
+        <button
+          className={submitBtn}
+          type="submit"
+          disabled={loading}
+        >
           {loading ? "Publishing..." : "Publish Article"}
         </button>
 
+        {/* Loading Message */}
         {loading && (
-          <p className={loadingClass}>Publishing article...</p>
+          <p className={loadingClass}>
+            Publishing article...
+          </p>
         )}
+
       </form>
+
     </div>
   );
 }
