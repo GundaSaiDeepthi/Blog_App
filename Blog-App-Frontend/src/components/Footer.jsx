@@ -1,9 +1,17 @@
-import React from 'react'
+import React from "react";
+import "./Footer.css";
 
 function Footer() {
   return (
-    <div>Footer</div>
-  )
+    <footer className="footer">
+      
+
+      {/* Bottom */}
+      <div className="footer-bottom">
+        <p>© 2026 BlogSphere. All Rights Reserved.</p>
+      </div>
+    </footer>
+  );
 }
 
-export default Footer
+export default Footer;
