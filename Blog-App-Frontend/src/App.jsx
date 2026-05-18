@@ -13,15 +13,16 @@ import EditArticle from "./components/EditArticleForm";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Unauthorized from "./components/Unauthorized";
 import ErrorBoundary from "./components/ErrorBoundary";
+import Footer from "./components/Footer"; // import footer
 
 function App() {
+
   const routerObj = createBrowserRouter([
     {
       path: "/",
       element: <RootLayout />,
-      errorElement:<ErrorBoundary />,
+      errorElement: <ErrorBoundary />,
       children: [
-        ,
         {
           path: "",
           element: <Home />,
@@ -36,10 +37,11 @@ function App() {
         },
         {
           path: "user-profile",
-          element: 
-          <ProtectedRoute allowedRoles={["USER", "AUTHOR"]}>
-            <UserProfile />
-          </ProtectedRoute>,
+          element: (
+            <ProtectedRoute allowedRoles={["USER", "AUTHOR"]}>
+              <UserProfile />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -53,11 +55,11 @@ function App() {
         },
         {
           path: "author-profile",
-          element: 
-          <ProtectedRoute allowedRoles={["AUTHOR"]}>
-            <AuthorProfile />
-          </ProtectedRoute>,
-          
+          element: (
+            <ProtectedRoute allowedRoles={["AUTHOR"]}>
+              <AuthorProfile />
+            </ProtectedRoute>
+          ),
           children: [
             {
               index: true,
@@ -78,13 +80,13 @@ function App() {
           element: <ArticleByID />,
         },
         {
-          path:"edit-article",
-          element:<EditArticle />
+          path: "edit-article",
+          element: <EditArticle />,
         },
         {
-          path:"unauthorized",
-          element:<Unauthorized />
-        }
+          path: "unauthorized",
+          element: <Unauthorized />,
+        },
       ],
     },
   ]);
@@ -92,7 +94,11 @@ function App() {
   return (
     <>
       <Toaster position="top-center" reverseOrder={false} />
+
       <RouterProvider router={routerObj} />
+
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
