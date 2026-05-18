@@ -359,13 +359,14 @@ Platform: Render
 
 🔗 Backend URL:
 
-[Render Backend Deployment](https://blog-app-1-n245.onrender.com?utm_source=chatgpt.com)
+[Render Backend Deployment](https://blog-app-1-n245.onrender.com)
 
 ---
 
 ## Frontend Deployment
 
-Platform: Vercel
+Platform: Vercel 
+Vercel URL:https://blog-app-xi-flame.vercel.app/
 
 ---
 
